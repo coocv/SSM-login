@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 配置SpringMVC -->
+	<!-- 1.开启SpringMVC注解模式 -->
+	<mvc:annotation-driven />
+	<!-- 2.静态资源默认servlet配置-->
+	<mvc:default-servlet-handler />
+
+	<mvc:resources mapping="/WEB-INF/jquery/**" location="/WEB-INF/jquery/"></mvc:resources>
+	<!-- 配置视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		id="internalResourceViewResolver">
+		<property name="viewClass"
+				  value="org.springframework.web.servlet.view.JstlView" />
+		<!-- 前缀 -->
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<!-- 后缀 -->
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- 使用扫描机制，扫描包 -->
+	<context:component-scan base-package="com.controller" />
+	<context:component-scan base-package="com.interceptor"/>
+	<!--spring-mvc.xml中配置拦截器-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 配置拦截器作用的路径 -->
+			<mvc:mapping path="/**"/>
+			<bean class="com.interceptor.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>

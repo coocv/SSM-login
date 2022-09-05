@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- com.dao.UserDao对应Dao接口 -->
+<mapper namespace="com.dao.UserDao">
+	<!-- 目的：为dao接口方法提供sql语句配置,#后的username和password来自于IUserDao中的checkUser方法，里面的@Param("username") -->
+	<select id="checkUser" resultType="com.pojo.User">
+		SELECT * FROM user WHERE username=#{username} AND password=#{password}
+	</select>
+</mapper>
+
